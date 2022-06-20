@@ -1,24 +1,15 @@
 # charm-openidc-test-fixture
 
-## Description
+## Create the keycloak docker image resource
 
-TODO: Describe your charm in a few paragraphs of Markdown
+Install docker package:
 
-## Usage
+sudo apt install docker.io
+sudo docker pull quay.io/keycloak/keycloak:18.0.0
 
-TODO: Provide high-level usage, such as required config or relations
+sudo docker images
+sudo docker save <img id> | gzip > keycloak.tar.gz
 
 
-## Relations
+ 
 
-TODO: Provide any relations which are provided or required by your charm
-
-## OCI Images
-
-TODO: Include a link to the default image your charm uses
-
-## Contributing
-
-Please see the [Juju SDK docs](https://juju.is/docs/sdk) for guidelines
-on enhancements to this charm following best practice guidelines, and
-`CONTRIBUTING.md` for developer guidance.

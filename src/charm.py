@@ -65,7 +65,8 @@ class CharmOpenidcTestFixtureCharm(CharmBase):
             resource = None
 
         container = client.containers.run(client.images.list()[0].id,
-                            detach=True, ports={"8080":"8080"}, command="start-dev")
+                detach=True, ports={"8080":"8080"}, environment={"KEYCLOAK_ADMIN":"admin","KEYCLOAK_ADMIN_PASSWORD":"admin"}, command="start-dev")
+        container.restart()
         if container.status == 'created':
             self.model.unit.status = ActiveStatus("Service is running")
 
