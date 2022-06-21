@@ -18,11 +18,21 @@ sudo docker save <img id> | gzip > keycloak.tar.gz
 Attach the resource to the charm
 
 ```
-juju deploy ./charm-openidc-test-fixture_ubuntu-20.04-amd64.charm --resource dockerimg=../keyclok.tar.gz
+juju deploy ./charm-openidc-test-fixture_ubuntu-20.04-amd64.charm --resource dockerimg=./keyclok.tar.gz
 ```
 
 Access the keycloack dashboard using port 8080
 
 ```
 curl http://10.248.246.178:8080
-``
+```
+
+The realm is `demorealm`.
+
+The users are:
+
+    johndoe
+    janedoe
+
+The password for each is 'crapper'.
+
