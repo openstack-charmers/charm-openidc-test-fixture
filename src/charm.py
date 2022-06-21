@@ -14,7 +14,6 @@ develop a new k8s charm using the Operator Framework:
 
 import docker
 import logging
-
 from ops.charm import CharmBase
 from ops.framework import StoredState
 from ops.main import main
@@ -66,7 +65,13 @@ class CharmOpenidcTestFixtureCharm(CharmBase):
 
         container = client.containers.run(client.images.list()[0].id,
                 detach=True, ports={"8080":"8080"}, environment={"KEYCLOAK_ADMIN":"admin","KEYCLOAK_ADMIN_PASSWORD":"admin"}, command="start-dev")
-        container.restart()
+        rc = subprocess.call("./src/wait_for_tcp_port.sh", shell=True)
+        container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh create --server http://localhost:8080 --realm master  --user admin --password admin realms -s realm=demorealm -s enabled=true -o')
+        container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh create --server http://localhost:8080 --realm master  --user admin --password admin users -s username=johndoe -s enabled=true -r demorealm')
+        container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh create --server http://localhost:8080 --realm master  --user admin --password admin users -s username=janedoe -s enabled=true -r demorealm')
+        container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh set-password --server http://localhost:8080 --realm master  --user admin --password admin   --username janedoe -r demorealm --new-password crapper')
+        container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh set-password --server http://localhost:8080 --realm master  --user admin --password admin   --username johndoe -r demorealm --new-password crapper')
+        #container.restart()
         if container.status == 'created':
             self.model.unit.status = ActiveStatus("Service is running")
 
