@@ -11,4 +11,4 @@ bases:
 parts:
   charm:
     charm-python-packages:
-      - charmcraft
+      - charmhelpers
