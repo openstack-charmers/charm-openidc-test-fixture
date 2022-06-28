@@ -1,2 +1,3 @@
 ops >= 1.4.0
 docker
+charmhelpers
