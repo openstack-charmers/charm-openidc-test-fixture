@@ -22,8 +22,9 @@ from ops.model import (
     ActiveStatus,
     BlockedStatus
 )
-from charmhelper import (
-    apt_update, apt_install)
+from charmhelpers import (
+    apt_update, apt_install
+)
 import subprocess
 logger = logging.getLogger(__name__)
 
