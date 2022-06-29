@@ -52,7 +52,10 @@ class CharmOpenidcTestFixtureCharm(CharmBase):
         apt_update()
         apt_install(["docker.io"])
         client = docker.from_env()
+
+        self.model.unit.status = MaintenanceStatus("Packages installed. Preparing container...")
         try:
+            self.model.unit.status = MaintenanceStatus("Loading container image...")
             # Fetch a resource and install the dockerfile
             resource = self.model.resources.fetch("dockerimg")
             with open(resource, 'rb') as f:
@@ -63,9 +66,9 @@ class CharmOpenidcTestFixtureCharm(CharmBase):
         except Exception:
             # Failed to find a resource
             resource = None
-
+        self.model.unit.status = MaintenanceStatus("Running container...")
         container = client.containers.run(client.images.list()[0].id,
-                detach=True, ports={"8080":"8080"}, environment={"KEYCLOAK_ADMIN":"admin","KEYCLOAK_ADMIN_PASSWORD":"admin"}, command="start-dev")
+                detach=True, ports={"8443":"443"}, environment={"KEYCLOAK_ADMIN":"admin","KEYCLOAK_ADMIN_PASSWORD":"admin"})
         rc = subprocess.call("./src/wait_for_tcp_port.sh", shell=True)
         container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh create --server http://localhost:8080 --realm master  --user admin --password admin realms -s realm=demorealm -s enabled=true -o')
         container.exec_run(cmd='/opt/keycloak/bin/kcadm.sh create --server http://localhost:8080 --realm master  --user admin --password admin users -s username=johndoe -s enabled=true -r demorealm')
