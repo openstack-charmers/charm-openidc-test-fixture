@@ -22,7 +22,7 @@ from ops.model import (
     ActiveStatus,
     BlockedStatus
 )
-from charmhelper import (
+from charmhelpers.fetch import (
     apt_update, apt_install
 )
 import subprocess
