@@ -3,7 +3,7 @@
 
 # For a complete list of supported options, see:
 # https://juju.is/docs/sdk/metadata-reference
-name: charm-openidc-test-fixture
+name: openidc-test-fixture
 display-name: |
   Keycloak OIDC Test charm
 description: |
