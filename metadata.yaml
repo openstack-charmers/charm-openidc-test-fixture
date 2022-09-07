@@ -11,10 +11,9 @@ description: |
 summary: |
   Keycloak OIDC Test charm
 
-# TEMPLATE-TODO: each container defined above must specify an oci-image resource
 resources:
   dockerimg:
     type: file
     filename: dockerimg.tar.gz
     description: |
-      Tarball file for the oidc profider docker image.
+      Tarball file for the oidc provider docker image.
