@@ -1,4 +1,4 @@
-# charm-openidc-test-fixture
+# OpenIDC Test Fixture
 
 ## Create the keycloak docker image resource
 
@@ -20,10 +20,24 @@ Attach the resource to the charm
 juju deploy ./charm-openidc-test-fixture_ubuntu-20.04-amd64.charm --resource dockerimg=./keycloak.tar.gz
 ```
 
-Access the keycloack dashboard using port 8080
+When deploying from charmhub a default docker image is used when not attached
+one explicitly:
 
 ```
-curl -k https://10.248.246.178:443
+juju deploy --channel latest/edge ch:openidc-test-fixture
+```
+
+Access the keycloak dashboard using port 8080
+
+```
+xdg-open http://<IP>:8080/admin
+```
+
+When related to vault the service is reconfigured to use HTTPS, be aware that
+all the data will be purged before the reconfiguration.
+
+```
+juju add-relation vault openidc-test-fixture
 ```
 
 The realm is `demorealm`.
@@ -33,5 +47,10 @@ The users are:
     johndoe
     janedoe
 
-The password for each is 'crapper'.
+The password for each is 'f00bar'.
 
+The clients are:
+
+    keystone
+
+The password for each client is 'ubuntu11'
