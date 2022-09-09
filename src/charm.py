@@ -70,10 +70,12 @@ CMD_CREATE_REALM = ('/opt/keycloak/bin/kcadm.sh create '
                     '-s realm=demorealm -s enabled=true -o '
                     '--trustpass changeit')
 CMD_CREATE_USER = ('/opt/keycloak/bin/kcadm.sh create '
-                   '--server {} '
-                   '--realm master  --user admin '
+                   '--server {server} '
+                   '--realm master --user admin '
                    '--password admin users '
-                   '-s username={} -s enabled=true '
+                   '-s username={username} -s enabled=true '
+                   '-s emailVerified=true '
+                   '-s email {username}@example.com '
                    '-r demorealm '
                    '--trustpass changeit')
 CMD_SET_PASSWORD = ('/opt/keycloak/bin/kcadm.sh set-password '
@@ -177,7 +179,7 @@ class CharmOpenidcTestFixtureCharm(CharmBase):
 
         for username, password in USERS:
             logger.info('Creating user: %s', username)
-            cmd = CMD_CREATE_USER.format(url, username)
+            cmd = CMD_CREATE_USER.format(server=url, username=username)
             logger.debug('cmd: %s', cmd)
             (exit_code, output) = container.exec_run(cmd=cmd)
             logger.debug('exit code: %s, output: %s', exit_code, output)
