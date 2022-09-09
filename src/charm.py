@@ -75,7 +75,7 @@ CMD_CREATE_USER = ('/opt/keycloak/bin/kcadm.sh create '
                    '--password admin users '
                    '-s username={username} -s enabled=true '
                    '-s emailVerified=true '
-                   '-s email {username}@example.com '
+                   '-s email={username}@example.com '
                    '-r demorealm '
                    '--trustpass changeit')
 CMD_SET_PASSWORD = ('/opt/keycloak/bin/kcadm.sh set-password '
