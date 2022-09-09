@@ -11,6 +11,10 @@ description: |
 summary: |
   Keycloak OIDC Test charm
 
+requires:
+  certificates:
+    interface: tls-certificates
+
 resources:
   dockerimg:
     type: file
